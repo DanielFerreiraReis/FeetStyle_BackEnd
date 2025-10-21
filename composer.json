@@ -1,0 +1,21 @@
+{
+    "name": "danielferreirareis/loja-sapatos-backend",
+    "description": "Backend construido para a conclusão da disciplina de prgramação Web do curso de informática. Este Backend será para o projeto \"FeetStyle\", um gerenciador de loja (um loja de venda de sapatos).",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Danielferreirareis\\LojaSapatosBackend\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Daniel Ferreira Reis",
+            "email": "daniel.f.reis2007@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
