@@ -1,0 +1,31 @@
+# Dependências do Composer
+/vendor/
+
+# Arquivos de ambiente
+.env
+
+# Logs e erros
+*.log
+error_log
+php_errors.log
+
+# Cache e arquivos temporários
+*.cache
+*.tmp
+*.swp
+
+# Diretórios de IDEs
+.vscode/
+.idea/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de backup
+*.bak
+*.old
+*.orig
+
+# Configurações locais
+*.local.php
