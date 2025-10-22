@@ -7,24 +7,23 @@ use PDOException;
 
 class Database
 {
-    public static function conectar()
+    public static function conectar(): ?PDO
     {
-        $host = $_ENV['DB_HOST'];
-        $port = $_ENV['DB_PORT'];
-        $db   = $_ENV['DB_DATABASE'];
-        $user = $_ENV['DB_USERNAME'];
-        $pass = $_ENV['DB_PASSWORD'];
+        $host = $_ENV['DB_HOST'] ?? '127.0.0.1';
+        $port = $_ENV['DB_PORT'] ?? '3306';
+        $db   = $_ENV['DB_DATABASE'] ?? '';
+        $user = $_ENV['DB_USERNAME'] ?? '';
+        $pass = $_ENV['DB_PASSWORD'] ?? '';
 
         try {
-            return new PDO("mysql:host=$host;port=$port;dbname=$db", $user, $pass, [
+            $pdo = new PDO("mysql:host=$host;port=$port;dbname=$db", $user, $pass, [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
             ]);
             echo "✅ Conexão bem-sucedida!";
-
+            return $pdo;
         } catch (PDOException $e) {
             die("Erro na conexão: " . $e->getMessage());
         }
     }
 }
-
 ?>
