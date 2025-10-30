@@ -107,13 +107,17 @@ CREATE TABLE PessoaJuridica (
         ON UPDATE CASCADE
 );
 
--- Criação da tabela Marca
+-- =======================
+-- TABELA: Marca
+-- =======================
 CREATE TABLE Marca (
     idMarca INT PRIMARY KEY UNIQUE NOT NULL,
     nomeMarca VARCHAR(50) NOT NULL
 );
 
--- Criação da tabela Tipo
+-- =======================
+-- TABELA: Tipo
+-- =======================
 CREATE TABLE Tipo (
     idTipo INT PRIMARY KEY  UNIQUE NOT NULL,
     nomeTipo VARCHAR(30) NOT NULL,
@@ -121,7 +125,9 @@ CREATE TABLE Tipo (
     categoria VARCHAR(15)
 );
 
--- Criação da tabela Fabricar (tabela de relacionamento N:N)
+-- =======================
+-- TABELA: Cliente:: (tabela de relacionamento N:N)
+-- ======================= 
 CREATE TABLE Fabricar (
     idMarca INT UNIQUE NOT NULL,
     idTipo INT UNIQUE NOT NULL,
@@ -134,7 +140,9 @@ CREATE TABLE Fabricar (
         ON UPDATE CASCADE
 );
 
--- Criação da tabela Modelo
+-- =======================
+-- TABELA: Modelo
+-- =======================
 CREATE TABLE Modelo(
     idModelo INT PRIMARY KEY UNIQUE NOT NULL,
     nomeModelo VARCHAR(30) NOT NULL,
@@ -146,7 +154,9 @@ CREATE TABLE Modelo(
         ON UPDATE CASCADE
 );
 
--- Criação da tabela Calçado
+-- =======================
+-- TABELA: Calçado
+-- =======================
 CREATE TABLE Calcado (
     idCalcado INT PRIMARY KEY UNIQUE NOT NULL,
     genero CHAR(1),
