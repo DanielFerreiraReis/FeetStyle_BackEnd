@@ -28,6 +28,21 @@ if (!$user || !$senha) {
   exit;
 }
 
+//Teste de Produção
+  // Admin Padrão
+    if ($user == 'admin' && $senha == 'admin') {
+      echo json_encode(['success' => true, 'role' => 'admin' ,'mesage' => 'Admin padrão']);
+      exit;
+      # code verification...
+    }
+
+  // Vendedor Padrão
+    if ($user == 'vendedor' && $senha == 'vendedor') {
+      echo json_encode(['success' => true, 'role' => 'vendedor' ,'mesage' => 'Admin padrão']);
+      exit;
+      # code verification...
+    }
+
 try {
   // Consulta o login e dados do funcionário
   $sql = "SELECT f.role, f.status, l.password
