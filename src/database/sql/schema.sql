@@ -20,6 +20,7 @@ CREATE TABLE Funcionario (
         dataDemissao DATE NULL,
         salario DECIMAL(10,2) NOT NULL,          -- mais preciso que DOUBLE para dinheiro
         cpf CHAR(11) UNIQUE NOT NULL,
+        foto VARCHAR(255) NOT NULL,              -- foto do funcionário
 
         -- Dados relativos a funcao do funcionario
         role TINYINT(1) NOT NULL,               -- 0 = funcionário, 1 = admin, por exemplo
@@ -164,7 +165,9 @@ CREATE TABLE Calcado (
     tamanhoCalcado VARCHAR(5),
     precoSapato DOUBLE,
     dataFabricacao DATE,
-    idModelo INT UNIQUE NOT NULL,
+    quantidadeEmStoque INT NOT NULL,
+    foto VARCHAR(255) NOT NULL,
+    idModelo INT NOT NULL,
     FOREIGN KEY (idModelo) REFERENCES Modelo(idModelo)
         ON DELETE CASCADE
         ON UPDATE CASCADE
@@ -181,8 +184,8 @@ CREATE TABLE Venda (
     valorTotal DECIMAL(10,2) NOT NULL,
     
     idFuncionario INT UNIQUE NOT NULL,
-    idCliente INT UNIQUE NOT NULL,
-    idCalcado INT  UNIQUE NOT NULL,
+    idCliente INT NOT NULL,
+    idCalcado INT NOT NULL,
 
     --  Chave estrangeira para o Funcionário
     CONSTRAINT fk_venda_funcionario
