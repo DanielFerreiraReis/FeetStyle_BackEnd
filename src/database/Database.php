@@ -6,7 +6,6 @@ use PDO;
 use PDOException;
 use Dotenv\Dotenv;
 
-
 class Database
 {
     public static function conectar(): ?PDO
