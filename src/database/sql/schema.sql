@@ -146,7 +146,7 @@ CREATE TABLE Fabricar (
 -- =======================
 CREATE TABLE Modelo(
     idModelo INT PRIMARY KEY UNIQUE NOT NULL,
-    nomeModelo VARCHAR(30) NOT NULL,
+    nomeModelo VARCHAR(30) UNIQUE NOT NULL,
     anoLancamento DATE,
     anoModelo DATE NOT NULL,
     idTipos INT UNIQUE NOT NULL,
