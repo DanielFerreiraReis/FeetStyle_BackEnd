@@ -1,15 +1,34 @@
 <?php
 use Src\Controllers\PreferencesController;
 
+// CORS headers
+header("Access-Control-Allow-Origin: http://localhost:5173");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+
+// Responde à requisição OPTIONS (pré-flight)
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
+// Detecta método e rota
 $method = $_SERVER['REQUEST_METHOD'];
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// Ajuste conforme o nome da pasta no XAMPP
-$base = '/BackEndLojaDeSapatos';
+// Base da aplicação no XAMPP
+$base = '/BackEndLojaDeSapatos/index.php';
+
+// Remove a base da URL
 $route = str_replace($base, '', $path);
+
+// Normaliza rota para minúsculo
+$route = strtolower(rtrim($route, '/'));
 
 // Define rotas
 switch ("$method $route") {
+
     case 'GET /user/preferences':
         PreferencesController::getPreferences();
         break;

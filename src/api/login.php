@@ -1,5 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 
@@ -29,15 +30,37 @@ if (!$user || !$senha) {
     exit;
 }
 
-// Simulação: Admin padrão
 if ($user === 'admin' && $senha === 'admin') {
-    echo json_encode(['success' => true, 'role' => 'admin', 'message' => 'Admin padrão']);
+    $payload = [
+        'user_id' => 0,
+        'role' => 'admin',
+        'exp' => time() + 3600
+    ];
+    $token = JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
+
+    echo json_encode([
+        'success' => true,
+        'role' => 'admin',
+        'token' => $token,
+        'message' => 'Admin padrão'
+    ]);
     exit;
 }
 
-// Simulação: Vendedor padrão
 if ($user === 'vendedor' && $senha === 'vendedor') {
-    echo json_encode(['success' => true, 'role' => 'vendedor', 'message' => 'Vendedor padrão']);
+    $payload = [
+        'user_id' => 0,
+        'role' => 'vendedor',
+        'exp' => time() + 3600
+    ];
+    $token = JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
+
+    echo json_encode([
+        'success' => true,
+        'role' => 'vendedor',
+        'token' => $token,
+        'message' => 'Vendedor padrão'
+    ]);
     exit;
 }
 
