@@ -33,6 +33,9 @@ CREATE TABLE Funcionario (
         cidade VARCHAR(45) NOT NULL,
         estado CHAR(2) NOT NULL,
         detalhamentoEndereco VARCHAR(45)
+    
+    -- Dados relativos as configurções de FrontEnd
+     theme VARCHAR(10) NOT NULL DEFAULT 'Dark';
 );
 
 -- =======================
@@ -209,3 +212,5 @@ CREATE TABLE Venda (
         ON UPDATE CASCADE
 );
 
+-- comando Dellet
+Delete from funcionario;
