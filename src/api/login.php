@@ -1,9 +1,8 @@
 <?php
-header("Access-Control-Allow-Origin: http://localhost:5173");
-header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 
-// Responde a requisições OPTIONS (pré-flight)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
@@ -13,70 +12,72 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/../database/Database.php';
 
 use Src\Database;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+use Dotenv\Dotenv;
 
-// Conecta ao banco
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->load();
+
 $pdo = Database::conectar();
-
-// Recebe os dados do frontend
 $input = json_decode(file_get_contents('php://input'), true);
 $user = $input['user'] ?? '';
 $senha = $input['senha'] ?? '';
 
-// Validação básica
 if (!$user || !$senha) {
-  echo json_encode(['success' => false, 'message' => 'Usuário e senha são obrigatórios']);
-  exit;
+    echo json_encode(['success' => false, 'message' => 'Usuário e senha são obrigatórios']);
+    exit;
 }
 
-//Teste de Produção
-  // Admin Padrão
-    if ($user == 'admin' && $senha == 'admin') {
-      echo json_encode(['success' => true, 'role' => 'admin' ,'mesage' => 'Admin padrão']);
-      exit;
-      # code verification...
-    }
+// Simulação: Admin padrão
+if ($user === 'admin' && $senha === 'admin') {
+    echo json_encode(['success' => true, 'role' => 'admin', 'message' => 'Admin padrão']);
+    exit;
+}
 
-  // Vendedor Padrão
-    if ($user == 'vendedor' && $senha == 'vendedor') {
-      echo json_encode(['success' => true, 'role' => 'vendedor' ,'mesage' => 'Admin padrão']);
-      exit;
-      # code verification...
-    }
+// Simulação: Vendedor padrão
+if ($user === 'vendedor' && $senha === 'vendedor') {
+    echo json_encode(['success' => true, 'role' => 'vendedor', 'message' => 'Vendedor padrão']);
+    exit;
+}
 
 try {
-  // Consulta o login e dados do funcionário
-  $sql = "SELECT f.role, f.status, l.password
-          FROM Login l
-          JOIN Funcionario f ON l.idFuncionario = f.id
-          WHERE l.userLog = :user";
+    $sql = "SELECT f.id, f.role, f.status, l.password
+            FROM Login l
+            JOIN Funcionario f ON l.idFuncionario = f.id
+            WHERE l.userLog = :user";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':user', $user);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  $stmt = $pdo->prepare($sql);
-  $stmt->bindParam(':user', $user);
-  $stmt->execute();
-  $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$result || !password_verify($senha, $result['password'])) {
+        echo json_encode(['success' => false, 'message' => 'Credenciais inválidas']);
+        exit;
+    }
 
-  // Verificações
-  if (!$result) {
-    echo json_encode(['success' => false, 'message' => 'Usuário não encontrado']);
-    exit;
-  }
+    if ($result['status'] != 1) {
+        echo json_encode(['success' => false, 'message' => 'Funcionário inativo']);
+        exit;
+    }
 
-  if ($result['status'] != 1) {
-    echo json_encode(['success' => false, 'message' => 'Funcionário inativo']);
-    exit;
-  }
+    $role = $result['role'] == 1 ? 'admin' : 'vendedor';
 
-  if (!password_verify($senha, $result['password'])) {
-    echo json_encode(['success' => false, 'message' => 'Senha incorreta']);
-    exit;
-  }
+    $payload = [
+        'user_id' => $result['id'],
+        'role' => $role,
+        'exp' => time() + 3600
+    ];
 
-  // Define o cargo
-  $role = $result['role'] == 1 ? 'admin' : 'vendedor';
+    $token = JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
 
-  // Retorna sucesso
-  echo json_encode(['success' => true, 'role' => $role]);
-
+    echo json_encode([
+        'success' => true,
+        'role' => $role,
+        'token' => $token
+    ]);
 } catch (PDOException $e) {
-  echo json_encode(['success' => false, 'message' => 'Erro no servidor']);
+    echo json_encode(['success' => false, 'message' => 'Erro no servidor']);
 }
+
+?>
