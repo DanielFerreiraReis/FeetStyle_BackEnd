@@ -10,7 +10,7 @@ CREATE TABLE Funcionario (
     -- Dados comuns a Pessoa
         id INT PRIMARY KEY UNIQUE NOT NULL,
         nome VARCHAR(45) NOT NULL,
-        telefone BIGINT NOT NULL,                -- LONG não existe em MySQL; use BIGINT
+        telefone BIGINT NOT NULL,     
         email VARCHAR(45) NOT NULL,
         status TINYINT(1) NOT NULL,              -- 1 = ativo, 0 = inativo
 
@@ -35,7 +35,7 @@ CREATE TABLE Funcionario (
         detalhamentoEndereco VARCHAR(45)
     
     -- Dados relativos as configurções de FrontEnd
-     theme VARCHAR(10) NOT NULL DEFAULT 'Dark';
+        theme VARCHAR(10) NOT NULL DEFAULT 'Dark';
 );
 
 -- =======================
@@ -133,8 +133,8 @@ CREATE TABLE Tipo (
 -- TABELA: Cliente:: (tabela de relacionamento N:N)
 -- ======================= 
 CREATE TABLE Fabricar (
-    idMarca INT UNIQUE NOT NULL,
-    idTipo INT UNIQUE NOT NULL,
+    idMarca INT NOT NULL,
+    idTipo INT NOT NULL,
     PRIMARY KEY (idMarca, idTipo),
     FOREIGN KEY (idMarca) REFERENCES Marca(idMarca)
         ON DELETE CASCADE
@@ -152,7 +152,7 @@ CREATE TABLE Modelo(
     nomeModelo VARCHAR(30) UNIQUE NOT NULL,
     anoLancamento DATE,
     anoModelo DATE NOT NULL,
-    idTipos INT UNIQUE NOT NULL,
+    idTipos INT NOT NULL,
     FOREIGN KEY (idTipos) REFERENCES Tipo(idTipo)
         ON DELETE CASCADE
         ON UPDATE CASCADE
