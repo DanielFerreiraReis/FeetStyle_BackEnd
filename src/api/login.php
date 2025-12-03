@@ -22,8 +22,8 @@ $dotenv->load();
 
 $pdo = Database::conectar();
 $input = json_decode(file_get_contents('php://input'), true);
-$user = $input['user'] ?? '';
-$senha = $input['senha'] ?? '';
+$user = trim($input['user']) ?? '';
+$senha = trim($input['senha']) ?? '';
 
 if (!$user || !$senha) {
     echo json_encode(['success' => false, 'message' => 'Usuário e senha são obrigatórios']);

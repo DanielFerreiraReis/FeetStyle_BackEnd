@@ -34,7 +34,7 @@ try {
     $status = $_POST['status'] ?? 1;
     $cargo = $_POST['cargo'] ?? '';
     $dataAdmissao = $_POST['dataAdmissao'] ?? '';
-    $dataDemissao = $_POST['dataDemissao'] ?? null;
+    $dataDemissao = null;
     $salario = $_POST['salario'] ?? 0;
     $cpf = $_POST['cpf'] ?? '';
     $foto = null;
@@ -49,7 +49,7 @@ try {
 
     // Upload da foto
     if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = '../../uploads/';
+        $uploadDir = '../../uploads/fotosFuncionarios/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }
