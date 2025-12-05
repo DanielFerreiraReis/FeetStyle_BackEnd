@@ -212,5 +212,12 @@ CREATE TABLE Venda (
         ON UPDATE CASCADE
 );
 
+-- tabela para aramazenar ip's e impedir ataques de brute Force
+CREATE TABLE rate_limit (
+
+    ip VARCHAR(50) PRIMARY KEY,
+    attempts INT NOT NULL DEFAULT 0,
+    blocked_until INT NOT NULL DEFAULT 0
+);
 -- comando Dellet
 Delete from funcionario;
