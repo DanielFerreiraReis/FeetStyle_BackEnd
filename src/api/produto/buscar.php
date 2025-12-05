@@ -1,13 +1,10 @@
 <?php
-
 // Usa CORS + autoload + env + PDO + rateLimit do bootstrap
+// Já temos: headers, CORS, OPTIONS, autoload, ENV, e **$pdo** conectado
+//usos do bootstrap
 require_once __DIR__ . '/../../configs/bootstrap.php';
 
-// Já temos: headers, CORS, OPTIONS, autoload, ENV, e **$pdo** conectado
-
-// ---------------------------------------------------------------------
-// 1. Verifica ID
-// ---------------------------------------------------------------------
+// Verifica se o ID foi enviado
 if (!isset($_GET["id"])) {
     echo json_encode(["success" => false, "message" => "ID não enviado"]);
     exit;
