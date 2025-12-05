@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require_once __DIR__ . '/../../../vendor/autoload.php';
 require_once __DIR__ . '/../../database/Database.php';
 
+
 use Src\Database;
 
 // Verifica se o ID foi enviado
