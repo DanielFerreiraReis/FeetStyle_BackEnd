@@ -2,10 +2,7 @@
 use Src\Controllers\PreferencesController;
 
 // CORS headers
-header("Access-Control-Allow-Origin: http://localhost:5173");
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+require_once __DIR__ . '/configs/bootstrap.php';
 
 // Responde à requisição OPTIONS (pré-flight)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {

@@ -1,21 +1,13 @@
 <?php
-header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
-// Responde ao preflight OPTIONS
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit();
-}
+// Usa CORS + autoload + env + PDO + rateLimit do bootstrap
+require_once __DIR__ . '/../../configs/bootstrap.php';
 
-require_once __DIR__ . '/../../../vendor/autoload.php';
-require_once __DIR__ . '/../../database/Database.php';
+// Já temos: headers, CORS, OPTIONS, autoload, ENV, e **$pdo** conectado
 
-use Src\Database;
-
-// Verifica se o ID foi enviado
+// ---------------------------------------------------------------------
+// 1. Verifica ID
+// ---------------------------------------------------------------------
 if (!isset($_GET["id"])) {
     echo json_encode(["success" => false, "message" => "ID não enviado"]);
     exit;
@@ -24,9 +16,10 @@ if (!isset($_GET["id"])) {
 $id = $_GET["id"];
 
 try {
-    $db = new Database();
-    $conn = Database::conectar();
 
+    // -----------------------------------------------------------------
+    // 2. Consulta SQL
+    // -----------------------------------------------------------------
     $sql = "
         SELECT 
             c.idCalcado AS id,
@@ -42,15 +35,19 @@ try {
         LIMIT 1
     ";
 
-    $stmt = $conn->prepare($sql);
+    $stmt = $pdo->prepare($sql);   // <-- usa PDO do bootstrap
     $stmt->bindParam(":id", $id, PDO::PARAM_INT);
     $stmt->execute();
 
     $produto = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    // -----------------------------------------------------------------
+    // 3. Retorno
+    // -----------------------------------------------------------------
     if ($produto) {
-        // Ajusta a URL completa da imagem
-        $produto['image'] = "http://localhost/BackEndLojaDeSapatos/uploads/fotosCalcados/" . $produto['image'];
+
+        $produto['image'] =
+            "http://localhost/BackEndLojaDeSapatos/uploads/fotosCalcados/" . $produto['image'];
 
         echo json_encode([
             "success" => true,
@@ -64,6 +61,7 @@ try {
     }
 
 } catch (Exception $e) {
+
     echo json_encode([
         "success" => false,
         "message" => "Erro de servidor",

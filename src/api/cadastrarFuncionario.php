@@ -1,13 +1,7 @@
 <?php
+require_once __DIR__ . '/../configs/bootstrap.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/../database/Database.php';
-
-use Src\Database;
-
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST");
-header("Access-Control-Allow-Headers: Content-Type");
-header("Content-Type: application/json");
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'message' => 'Método inválido']);
@@ -15,8 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 try {
-    $pdo = Database::conectar();
-
     $anoAtual = date('Y');
     do {
         $codigoAleatorio = str_pad(random_int(0, 9999), 4, '0', STR_PAD_LEFT);
