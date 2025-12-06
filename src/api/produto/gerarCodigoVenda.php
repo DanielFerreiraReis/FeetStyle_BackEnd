@@ -1,15 +1,8 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-
-require_once __DIR__ . '/../../../vendor/autoload.php';
-require_once __DIR__ . '/../../database/Database.php';
-
-use Src\Database;
-
-$pdo = Database::conectar();
+// Usa CORS + autoload + env + PDO + rateLimit do bootstrap
+// Já temos: headers, CORS, OPTIONS, autoload, ENV, e **$pdo** conectado
+//usos do bootstrap
+require_once __DIR__ . '/../../configs/bootstrap.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -48,6 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             "message" => "Erro ao gerar código da venda",
             "error" => $e->getMessage()
         ]);
-}
-exit;
+    }
+    exit;
 }
