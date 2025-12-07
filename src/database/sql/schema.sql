@@ -32,10 +32,10 @@ CREATE TABLE Funcionario (
         cep CHAR(9) NOT NULL,
         cidade VARCHAR(45) NOT NULL,
         estado CHAR(2) NOT NULL,
-        detalhamentoEndereco VARCHAR(45)
+        detalhamentoEndereco VARCHAR(45),
     
     -- Dados relativos as configurções de FrontEnd
-        theme VARCHAR(10) NOT NULL DEFAULT 'Dark';
+        theme VARCHAR(10) NOT NULL DEFAULT 'Dark'
 );
 
 -- =======================
@@ -130,7 +130,7 @@ CREATE TABLE Tipo (
 );
 
 -- =======================
--- TABELA: Cliente:: (tabela de relacionamento N:N)
+-- TABELA: FABRICAR:: entre Marca e Tipo (tabela de relacionamento N:N)
 -- ======================= 
 CREATE TABLE Fabricar (
     idMarca INT NOT NULL,
@@ -186,7 +186,7 @@ CREATE TABLE Venda (
     quantidade INT NOT NULL,
     valorTotal DECIMAL(10,2) NOT NULL,
     
-    idFuncionario INT UNIQUE NOT NULL,
+    idFuncionario INT NOT NULL,
     idCliente INT NOT NULL,
     idCalcado INT NOT NULL,
 

@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 // ============================================================================
 use Dotenv\Dotenv;
 
-$dotenv = Dotenv::createImmutable(dirname(__DIR__, 1)); 
+$dotenv = Dotenv::createImmutable(dirname(__DIR__, 1));
 $dotenv->safeLoad();
 
 // ============================================================================
@@ -38,7 +38,5 @@ $pdo = Database::conectar();
 // ============================================================================
 require_once __DIR__ . '/security/rate_limit.php';
 
-$ip = $_SERVER['REMOTE_ADDR']; 
+$ip = $_SERVER['REMOTE_ADDR'];
 $rateAttempts = checkRateLimit($pdo, $ip); // tava aqui o erro 🏆
-
-?>

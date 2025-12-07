@@ -14,7 +14,7 @@ $allowedOrigin = $_ENV['APP_URL'] ?? 'http://localhost:5173';
 header("Access-Control-Allow-Origin: {$allowedOrigin}");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Internal-Key");
 header("Content-Type: application/json");
 
 // Trata requisições OPTIONS (preflight)
