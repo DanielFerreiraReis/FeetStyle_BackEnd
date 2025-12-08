@@ -30,10 +30,23 @@ $route = rtrim($route, '/');
 // ROTAS
 // ============================================================================
 switch ("$method $route") {
-    
+
     // ------------------- PÚBLICAS -------------------
     case 'POST /login':
         require_once __DIR__ . '/api/login.php';
+        break;
+    
+    //---------------------sub-rotas------------------- 
+    case 'POST /login/verificar-funcionario':
+        // validateJwt();
+        checkApiKey();
+        require_once __DIR__ . '/api/verifyFuncionario.php';
+        break;
+
+    case 'POST /login/cadastrar-login':
+        // validateJwt();
+        checkApiKey();
+        require_once __DIR__ . '/api/createLogin.php';
         break;
 
     // ------------------- USER -------------------
@@ -50,10 +63,16 @@ switch ("$method $route") {
         break;
 
     // ------------------- ADMIN -------------------
-     case 'POST /admin/register':
+    case 'POST /admin/register':
         validateJwt();
         checkApiKey();
         require_once __DIR__ . '/api/cadastrarFuncionario.php';
+        break;
+    
+    case 'POST /admin/cadastro':
+        validateJwt();
+        checkApiKey();
+        require_once __DIR__ . '/api/cadastrarCliente.phpp';
         break;
 
 
@@ -75,7 +94,7 @@ switch ("$method $route") {
         checkApiKey();
         require_once __DIR__ . '/api/marca.php';
         break;
-    
+
     case 'GET /admin/tipo':
         validateJwt();
         checkApiKey();
@@ -94,7 +113,7 @@ switch ("$method $route") {
         checkApiKey();
         require_once __DIR__ . '/api/marca.php';
         break;
-    
+
     case 'POST /admin/tipo':
         validateJwt();
         checkApiKey();

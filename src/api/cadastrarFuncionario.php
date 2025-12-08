@@ -20,7 +20,7 @@ try {
     } while ($existe);
 
     // Coleta dos dados
-    $nome = $_POST['nome'] ?? '';
+    $nome = strtolower($_POST['nome'] ?? '');
     $telefone = $_POST['telefone'] ?? '';
     $email = $_POST['email'] ?? '';
     $status = $_POST['status'] ?? 1;
@@ -31,13 +31,13 @@ try {
     $cpf = $_POST['cpf'] ?? '';
     $foto = null;
     $role = $_POST['role'] ?? 0;
-    $rua = $_POST['rua'] ?? '';
+    $rua = strtolower($_POST['rua'] ?? '');
     $numCasa = $_POST['numCasa'] ?? 0;
-    $bairro = $_POST['bairro'] ?? null;
+    $bairro = strtolower($_POST['bairro'] ?? null);
     $cep = $_POST['cep'] ?? '';
-    $cidade = $_POST['cidade'] ?? '';
+    $cidade = strtolower($_POST['cidade'] ?? '');
     $estado = $_POST['estado'] ?? '';
-    $detalhamentoEndereco = $_POST['detalhamentoEndereco'] ?? null;
+    $detalhamentoEndereco = strtolower($_POST['detalhamentoEndereco'] ?? null);
 
     // Upload da foto
     if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
