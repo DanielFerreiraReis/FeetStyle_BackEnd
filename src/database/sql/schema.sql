@@ -219,5 +219,25 @@ CREATE TABLE rate_limit (
     attempts INT NOT NULL DEFAULT 0,
     blocked_until INT NOT NULL DEFAULT 0
 );
--- comando Dellet
-Delete from funcionario;
+
+ALTER TABLE Venda
+ADD COLUMN metodoPagamento VARCHAR(20) NOT NULL;
+
+ALTER TABLE Venda
+ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'concluida' AFTER metodoPagamento;
+
+CREATE TABLE VendaItem (
+    idVenda INT NOT NULL,
+    idCalcado INT NOT NULL,
+    quantidade INT NOT NULL,
+    valorUnitario DECIMAL(10,2) NOT NULL,
+    totalItem DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (idVenda, idCalcado),
+    FOREIGN KEY (idVenda) REFERENCES Venda(idVenda)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (idCalcado) REFERENCES Calcado(idCalcado)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+ALTER TABLE Venda
+MODIFY COLUMN idCliente INT NULL;
