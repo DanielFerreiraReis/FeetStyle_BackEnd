@@ -185,9 +185,11 @@ CREATE TABLE Venda (
     dataVenda DATE NOT NULL,
     quantidade INT NOT NULL,
     valorTotal DECIMAL(10,2) NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'concluida' AFTER metodoPagamento;
+    metodoPagamento VARCHAR(20) NOT NULL
     
     idFuncionario INT NOT NULL,
-    idCliente INT NOT NULL,
+    idCliente INT NULL,
     idCalcado INT NOT NULL,
 
     --  Chave estrangeira para o Funcionário
@@ -220,13 +222,9 @@ CREATE TABLE rate_limit (
     blocked_until INT NOT NULL DEFAULT 0
 );
 
-ALTER TABLE Venda
-ADD COLUMN metodoPagamento VARCHAR(20) NOT NULL;
-
-ALTER TABLE Venda
-ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'concluida' AFTER metodoPagamento;
-
+ -- tabela para aramazenar os dados da venda do item
 CREATE TABLE VendaItem (
+
     idVenda INT NOT NULL,
     idCalcado INT NOT NULL,
     quantidade INT NOT NULL,
@@ -238,6 +236,3 @@ CREATE TABLE VendaItem (
     FOREIGN KEY (idCalcado) REFERENCES Calcado(idCalcado)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-ALTER TABLE Venda
-MODIFY COLUMN idCliente INT NULL;
