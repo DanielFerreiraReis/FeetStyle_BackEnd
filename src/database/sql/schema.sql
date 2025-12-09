@@ -176,6 +176,14 @@ CREATE TABLE Calcado (
         ON UPDATE CASCADE
 );
 
+-- tabela para aramazenar ip's e impedir ataques de brute Force
+CREATE TABLE rate_limit (
+
+    ip VARCHAR(50) PRIMARY KEY,
+    attempts INT NOT NULL DEFAULT 0,
+    blocked_until INT NOT NULL DEFAULT 0
+);
+
 
 -- =======================
 -- TABELA: Venda ou Cupom fiscal
@@ -212,14 +220,6 @@ CREATE TABLE Venda (
         REFERENCES Calcado(idCalcado)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-);
-
--- tabela para aramazenar ip's e impedir ataques de brute Force
-CREATE TABLE rate_limit (
-
-    ip VARCHAR(50) PRIMARY KEY,
-    attempts INT NOT NULL DEFAULT 0,
-    blocked_until INT NOT NULL DEFAULT 0
 );
 
  -- tabela para aramazenar os dados da venda do item
