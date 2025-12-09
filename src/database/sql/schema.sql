@@ -194,7 +194,7 @@ CREATE TABLE Venda (
     quantidade INT NOT NULL,
     valorTotal DECIMAL(10,2) NOT NULL,
     status VARCHAR(20) NOT NULL DEFAULT 'concluida' AFTER metodoPagamento;
-    metodoPagamento VARCHAR(20) NOT NULL
+    metodoPagamento VARCHAR(20) NOT NULL,
     
     idFuncionario INT NOT NULL,
     idCliente INT NULL,

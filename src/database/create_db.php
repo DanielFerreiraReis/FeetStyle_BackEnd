@@ -171,8 +171,11 @@ try {
         quantidade INT NOT NULL,
         valorTotal DECIMAL(10,2) NOT NULL,
         idFuncionario INT NOT NULL,
-        idCliente INT NOT NULL,
+        idCliente INT NULL,
         idCalcado INT NOT NULL,
+        status VARCHAR(20) NOT NULL DEFAULT 'concluida',
+        metodoPagamento VARCHAR(20) NOT NULL,
+        
         FOREIGN KEY (idFuncionario) REFERENCES Funcionario(id)
             ON DELETE CASCADE
             ON UPDATE CASCADE,
@@ -188,6 +191,20 @@ try {
         attempts INT NOT NULL DEFAULT 0,
         blocked_until INT NOT NULL DEFAULT 0
     );
+
+    CREATE TABLE IF NOT EXISTS VendaItem (
+        idVenda INT NOT NULL,
+        idCalcado INT NOT NULL,
+        quantidade INT NOT NULL,
+        valorUnitario DECIMAL(10,2) NOT NULL,
+        totalItem DECIMAL(10,2) NOT NULL,
+        PRIMARY KEY (idVenda, idCalcado),
+        FOREIGN KEY (idVenda) REFERENCES Venda(idVenda)
+            ON DELETE CASCADE ON UPDATE CASCADE,
+        FOREIGN KEY (idCalcado) REFERENCES Calcado(idCalcado)
+            ON DELETE CASCADE ON UPDATE CASCADE
+    );
+
     SQL;
 
     $pdo->exec($sql);
